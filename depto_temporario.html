@@ -25,7 +25,7 @@
     *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
     a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
     .wrap{max-width:1080px;margin:auto;padding:24px}
-    header.hero{display:grid;gap:18px;padding:44px 24px;border-radius:20px;background:linear-gradient(180deg,#131822, #0e1218)}
+    div.hero{display:grid;gap:18px;padding:44px 24px;border-radius:20px;background:linear-gradient(180deg,#131822, #0e1218)}
     .hero h1{font-size:clamp(28px,3.8vw,44px);margin:0 0 8px}
     .hero p{color:var(--muted);margin:0}
     .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
@@ -88,12 +88,28 @@
   </script>
 </head>
 <body>
+    <header>
+    <div class="container nav">
+      <a class="logo" href="#top" aria-label="Inicio">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5 12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V9.5Z"/></svg>
+        <span>Monoambiente Córdoba</span>
+      </a>
+      <div class="actions">
+        <a class="btn" href="https://www.monoambientecordoba.com.ar/depto_temporario.html">Inicio</a>
+        <a class="btn" href="#fotos">Fotos</a>
+        <a class="btn" href="#ubicacion">Ubicación</a>
+        <a class="btn" href="#contacto">Contacto</a>
+        <a class="btn primary" href="#reservar">Reservar Ahora</a>
+      </div>
+    </div>
+  </header>
+  
   <div class="wrap">
     <nav class="breadcrumbs" aria-label="Breadcrumb">
       <span><a href="https://www.monoambientecordoba.com.ar"><b>Inicio</b></a></span> · <span>Alquiler temporario</span>
     </nav>
 
-    <header class="hero">
+    <div class="hero">
       <div class="badges">
         <span class="badge">Córdoba Capital</span>
         <span class="badge">Departamentos temporarios en Córdoba</span>
@@ -104,7 +120,7 @@
       <div class="cta">
         <a class="btn" href="#">Ver precios y disponibilidad</a>
       </div>
-    </header>
+    </div>
 
     <!-- Bloque semántico -->
     <section class="card" style="margin-top:18px">
