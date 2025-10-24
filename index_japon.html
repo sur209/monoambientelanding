@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Monoambiente Córdoba – Edición ULTRA (estilo Japón)</title>
+  <meta name="theme-color" content="#ff2a2a" />
+  <style>
+    /* ======================
+       Variables y reset
+    ====================== */
+    :root{
+      --ink:#111;
+      --paper:#fff;
+      --sun:#ff2a2a;
+      --gold:#ffd400;
+      --blue:#0077ff;
+      --green:#05b66f;
+      --violet:#a034ff;
+      --shadow:0 3px 0 #000;
+      --rounded:14px;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; color:var(--ink); background:radial-gradient(1200px 600px at 70% -10%, #fff3cf 0%, #fff 60%);}
+    a{color:inherit}
+
+    /* ======================
+       Efectos globales
+    ====================== */
+    @keyframes wiggle { 0%,100%{ transform:rotate(-1deg)} 50%{ transform:rotate(1deg)} }
+    @keyframes pulse { 0%,100%{ transform:scale(1)} 50%{ transform:scale(1.05)} }
+    @keyframes blink { 0%,100%{opacity:1} 40%{opacity:.55} 60%{opacity:.85} }
+    @keyframes floatUp { from{ transform:translateY(12px)} to{ transform:translateY(-12px)} }
+    @keyframes marqueeX { from{ transform:translateX(100%)} to{ transform:translateX(-100%)} }
+    .shine{ position:relative; }
+    .shine::after{ content:""; position:absolute; inset:0; background:linear-gradient(120deg, transparent 0%, rgba(255,255,255,.7) 40%, transparent 80%); transform:skewX(-20deg) translateX(-120%);}
+    .shine:hover::after{ transition:transform .7s ease; transform:skewX(-20deg) translateX(120%); }
+
+    /* ======================
+       Topbar
+    ====================== */
+    .topbar{ background:#fff; border-bottom:2px solid #000; position:sticky; top:0; z-index:50; }
+    .topbar .wrap{ max-width:1200px; margin:0 auto; padding:6px 10px; display:flex; gap:12px; align-items:center; font-size:12px; }
+    .chip{ border:2px solid #000; padding:4px 8px; border-radius:999px; font-weight:800; background:#ffe; }
+    .chip--sun{ background:linear-gradient(#fff8f8,#ffdede); }
+    .chip i{ font-style:normal; animation:blink 1.4s infinite; }
+    .spacer{ margin-left:auto; display:flex; gap:8px; }
+
+    /* ======================
+       Header con logo + CTAs
+    ====================== */
+    header{ max-width:1200px; margin:8px auto; display:grid; grid-template-columns:300px 1fr 320px; gap:14px; padding:0 10px; }
+    .logo{ display:flex; align-items:center; gap:12px; }
+    .sun{ width:56px; height:56px; border-radius:50%; background:radial-gradient(circle at 30% 30%, #ff6a6a, var(--sun)); box-shadow:inset 0 0 0 4px #b10000, 0 3px 0 #000; }
+    .brand strong{ font-size:24px; letter-spacing:.5px; }
+    .brand small{ display:block; color:#666; font-size:12px; }
+
+    .promo{ background:linear-gradient(90deg, var(--gold), #ffb703 50%, var(--gold)); border:3px solid #000; padding:10px; text-align:center; font-weight:900; box-shadow:var(--shadow); border-radius:var(--rounded); }
+    .promo u{ text-decoration-thickness:2px }
+
+    .cta-stack{ display:grid; grid-template-columns:1fr; gap:8px; align-content:start; }
+    .btn{ display:flex; align-items:center; justify-content:center; gap:8px; padding:12px; border:3px solid #000; border-radius:14px; font-weight:900; text-decoration:none; box-shadow:var(--shadow); transition:transform .08s ease; }
+    .btn:active{ transform:translateY(2px); box-shadow:0 1px 0 #000; }
+    .btn--air{ background:linear-gradient(180deg,#ff8fa3,#ff3359); color:#fff; }
+    .btn--book{ background:linear-gradient(180deg,#0047ff,#2f7dff); color:#fff; }
+    .btn .tag{ padding:2px 6px; background:#fff; border:2px solid #000; border-radius:999px; color:#000; font-size:11px; }
+
+    /* ======================
+       Nav arcoíris tipo tabs
+    ====================== */
+    .nav{ border-top:3px solid #000; border-bottom:3px solid #000; background:#fff; }
+    .nav .wrap{ max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(12, 1fr); }
+    .nav a{ display:block; padding:12px 10px; text-align:center; font-weight:900; font-size:13px; color:#000; text-decoration:none; border-right:1px solid #000; }
+    .nav a:last-child{ border-right:none; }
+    .nav a:nth-child(1){ background:#ffd400 }
+    .nav a:nth-child(2){ background:#ff7a00 }
+    .nav a:nth-child(3){ background:#ff2a2a;color:#fff }
+    .nav a:nth-child(4){ background:#00b4ff }
+    .nav a:nth-child(5){ background:#00d26a }
+    .nav a:nth-child(6){ background:#f2a7ff }
+    .nav a:nth-child(7){ background:#9dd4ff }
+    .nav a:nth-child(8){ background:#ffe4a3 }
+    .nav a:nth-child(9){ background:#ffc7c7 }
+    .nav a:nth-child(10){ background:#c6ffc9 }
+    .nav a:nth-child(11){ background:#e5e5e5 }
+    .nav a:nth-child(12){ background:#fff }
+    .nav a:hover{ filter:brightness(.92); text-decoration:underline; }
+
+    /* ======================
+       Hero con stickers
+    ====================== */
+    .hero{ max-width:1200px; margin:12px auto; padding:0 10px; }
+    .hero-box{ position:relative; border:3px solid #000; border-radius:var(--rounded); overflow:hidden; background:conic-gradient(from 180deg at 70% 20%, #fff, #fff, #fff0 40%, #ffe7a3 45%, #fff 70%);
+      box-shadow:var(--shadow);
+    }
+    .hero-media{ aspect-ratio: 21/7; display:grid; place-items:center; background:repeating-linear-gradient( 35deg, #fff8d9 0 14px, #fff1b6 14px 28px ); }
+    .hero-media h1{ margin:0; font-size:min(8vw,56px); letter-spacing:.5px; text-transform:uppercase; }
+    .ribbon{ position:absolute; top:14px; left:-10px; background:var(--sun); color:#fff; font-weight:900; padding:6px 16px; border:3px solid #000; transform:rotate(-6deg); box-shadow:var(--shadow); }
+    .sticker{ position:absolute; padding:10px 14px; border:3px solid #000; background:#fff; font-weight:900; border-radius:999px; box-shadow:var(--shadow); }
+    .sticker--gold{ background:var(--gold) }
+    .sticker--float{ animation:floatUp 2.4s ease-in-out infinite alternate }
+    .sticker:nth-of-type(1){ right:16px; top:14px }
+    .sticker:nth-of-type(2){ right:24px; bottom:18px }
+    .sticker:nth-of-type(3){ left:18px; bottom:10px }
+
+    /* ======================
+       Barra de búsqueda XL
+    ====================== */
+    .search{ max-width:1200px; margin:14px auto; padding:0 10px; }
+    .search .box{ display:flex; gap:8px; align-items:center; border:3px solid #000; padding:8px; background:#fff; border-radius:12px; box-shadow:var(--shadow); }
+    .search select,.search input{ border:2px solid #000; padding:10px; font:inherit; border-radius:8px; }
+    .search input{ flex:1 }
+    .search button{ border:3px solid #000; padding:12px 16px; font-weight:900; cursor:pointer; border-radius:10px; background:linear-gradient(#ff2a2a,#ca0000); color:#fff; box-shadow:var(--shadow); }
+
+    /* ======================
+       Marquee pro (CSS, sin <marquee>)
+    ====================== */
+    .marquee{ overflow:hidden; background:#fffbe6; border-top:2px solid #f2cd00; border-bottom:2px solid #f2cd00; }
+    .marquee .track{ display:flex; gap:40px; padding:8px 10px; animation:marqueeX 16s linear infinite; font-size:13px; font-weight:800; }
+
+    /* ======================
+       Layout principal
+    ====================== */
+    .layout{ max-width:1200px; margin:16px auto 24px; display:grid; grid-template-columns:240px 1fr 280px; gap:12px; padding:0 10px; }
+
+    .side{ border:3px solid #000; background:#fff; border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
+    .side .title{ background:#f2f2f2; padding:10px; font-weight:900; border-bottom:3px solid #000; }
+    .side ul{ list-style:none; margin:0; padding:8px; }
+    .side li{ padding:6px 2px; border-bottom:1px dotted #bbb; }
+    .side a{ color:#06c; text-decoration:none; font-size:13px; }
+
+    .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .card{ border:3px solid #000; background:#fff; position:relative; border-radius:12px; overflow:hidden; box-shadow:var(--shadow); transition:transform .12s ease; }
+    .card:hover{ transform:translateY(-2px) rotate(-.4deg); }
+    .card .ph{ height:140px; display:grid; place-items:center; font-weight:900; font-size:20px; background:
+      radial-gradient( circle at 20% 20%, #fff, #fff ),
+      repeating-linear-gradient(45deg, #ffe, #ffe 10px, #ffd 10px, #ffd 20px);
+    }
+    .card .body{ padding:10px; font-size:13px; }
+    .price{ font-size:20px; font-weight:1000; color:#b20000; }
+    .off{ position:absolute; top:8px; left:8px; background:#ffd400; border:3px solid #000; padding:4px 6px; font-weight:1000; transform:rotate(-6deg); border-radius:6px; }
+    .stamp{ position:absolute; bottom:8px; right:-12px; transform:rotate(-18deg); background:#fff; border:3px dashed #000; padding:6px 10px; font-weight:900; }
+
+    .right .coupon{ background:#fff; border:3px solid #000; padding:10px; margin-bottom:12px; border-radius:12px; box-shadow:var(--shadow); }
+    .right h4{ margin:0 0 6px; font-size:14px }
+
+    /* ======================
+       CTA dock flotante (siempre visible)
+    ====================== */
+    .dock{ position:fixed; right:12px; bottom:12px; display:grid; gap:8px; z-index:60; }
+    .dock .btn{ animation:pulse 2.2s ease-in-out infinite; }
+    .dock .btn:nth-child(2){ animation-delay:.6s }
+
+    /* ======================
+       Footer
+    ====================== */
+    footer{ border-top:4px solid #000; background:#f6f6f6; }
+    footer .wrap{ max-width:1200px; margin:0 auto; padding:14px 10px; font-size:12px }
+    footer .links{ display:grid; grid-template-columns:repeat(6,1fr); gap:8px }
+
+    /* ======================
+       Responsive
+    ====================== */
+    @media (max-width: 980px){
+      header{ grid-template-columns:1fr; }
+      .nav .wrap{ grid-template-columns:repeat(4,1fr); }
+      .hero-media{ aspect-ratio: 2.1/1; }
+      .layout{ grid-template-columns:1fr; }
+      .grid{ grid-template-columns:repeat(2,1fr); }
+      footer .links{ grid-template-columns:repeat(2,1fr); }
+      .dock{ right:8px; bottom:8px }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== Topbar ===== -->
+  <div class="topbar">
+    <div class="wrap">
+      <span class="chip">ESP | 日本語 | EN</span>
+      <span class="chip chip--sun">Hoy <i>POINTS x2</i></span>
+      <span class="chip">Check‑in 24h</span>
+      <div class="spacer">
+        <span>📍 Córdoba: 32°C ☀</span>
+        <span>2025/10/23 (木) 21:05</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="logo">
+      <div class="sun" aria-hidden="true"></div>
+      <div class="brand">
+        <strong>Monoambiente Córdoba</strong>
+        <small>モノアンビエンテ・コルドバ — alquiler temporario</small>
+      </div>
+    </div>
+
+    <div class="promo shine">MEGA OFERTAS ✨ <u>¡-20% WEEKDAY!</u> ／ 早割 10% OFF ／ Últimos cupos</div>
+
+    <div class="cta-stack">
+      <a class="btn btn--book" href="#booking" aria-label="Reservar en Booking">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h16v14H4z" stroke="#fff" stroke-width="2"/><path d="M7 9h10M7 13h10M7 17h6" stroke="#fff" stroke-width="2"/></svg>
+        Booking <span class="tag">-20% WEEKDAY</span>
+      </a>
+      <a class="btn btn--air" href="#airbnb" aria-label="Reservar en Airbnb">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4c4 6 6 9 6 12a6 6 0 0 1-12 0c0-3 2-6 6-12Z" stroke="#fff" stroke-width="2"/></svg>
+        Airbnb <span class="tag">Últimas 48h</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ===== Nav ===== -->
+  <nav class="nav">
+    <div class="wrap">
+      <a href="#">Inicio</a>
+      <a href="#">Ofertas</a>
+      <a href="#">Alojamiento</a>
+      <a href="#">Barrios</a>
+      <a href="#">Transporte</a>
+      <a href="#">Comida</a>
+      <a href="#">Tours</a>
+      <a href="#">Cupones</a>
+      <a href="#">Puntos</a>
+      <a href="#">Ayuda</a>
+      <a href="#">ニュース</a>
+      <a href="#">もっと</a>
+    </div>
+  </nav>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="hero-box">
+      <div class="ribbon">NUEVO 2025</div>
+      <div class="hero-media">
+        <h1>¡Reserva HOY! 平日SALE</h1>
+      </div>
+      <div class="sticker sticker--gold sticker--float">Wi‑Fi 300Mbps</div>
+      <div class="sticker sticker--float">Late Checkout</div>
+      <div class="sticker">Self Check‑in</div>
+    </div>
+  </section>
+
+  <!-- ===== Search ===== -->
+  <section class="search">
+    <div class="box">
+      <select aria-label="Categoría">
+        <option>Todo</option>
+        <option>Alojamiento</option>
+        <option>Comida</option>
+        <option>Tours</option>
+      </select>
+      <input type="text" placeholder="キーワード / palabra clave" aria-label="Buscar" />
+      <button>検索 Search</button>
+    </div>
+  </section>
+
+  <!-- ===== Marquee ===== -->
+  <div class="marquee" aria-live="polite">
+    <div class="track">
+      <span>【Aviso】 Black Friday adelantado ▶︎ 2000円 OFF</span>
+      <span>▲ Puntos dobles △ Check‑in express</span>
+      <span>▼ Nuevas fotos ◀︎ ¡Reservá ya! 予約急げ〜</span>
+      <span>WELCOME10 10% 1ª noche ／ WEEKDAY20 20% lun‑jue ／ LASTMIN 12% 48h</span>
+    </div>
+  </div>
+
+  <!-- ===== Layout ===== -->
+  <main class="layout">
+    <!-- Left side -->
+    <aside class="side" aria-label="Categorías">
+      <div class="title">Categorías / カテゴリ</div>
+      <ul>
+        <li><a href="#">Monoambiente – Alberdi</a></li>
+        <li><a href="#">Guía del huésped</a></li>
+        <li><a href="#">Cómo llegar</a></li>
+        <li><a href="#">Reglas de la casa</a></li>
+        <li><a href="#">Preguntas frecuentes</a></li>
+        <li><a href="#">Atención 24/7</a></li>
+        <li><a href="#">Servicios incluidos</a></li>
+        <li><a href="#">Mapa de interés</a></li>
+        <li><a href="#">Restaurantes cercanos</a></li>
+        <li><a href="#">Heladerías 🍨</a></li>
+        <li><a href="#">Cafés ☕</a></li>
+        <li><a href="#">Tours recomendados</a></li>
+        <li><a href="#">Museos y parques</a></li>
+        <li><a href="#">Soporte</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main grid -->
+    <section>
+      <div class="grid">
+        <!-- Card 1 -->
+        <article class="card">
+          <div class="off">-20%</div>
+          <div class="ph">ALBERDI</div>
+          <div class="body">
+            <div><strong>Reserva hoy – 平日SALE</strong></div>
+            <div class="price">ARS 34.900 / noche</div>
+            <div class="katsu">Baño privado・Cocina・A/A・Smart TV</div>
+            <div class="stamp">HOT PICK</div>
+          </div>
+        </article>
+        <!-- Card 2 -->
+        <article class="card">
+          <div class="off">COUPON</div>
+          <div class="ph">WEEKEND</div>
+          <div class="body">
+            <div><strong>2x1 puntos + late checkout</strong></div>
+            <div class="price">ARS 39.500</div>
+            <div class="katsu">チェックアウト 12:00 ・ Wi‑Fi 300Mbps</div>
+            <div class="stamp">LIMITADO</div>
+          </div>
+        </article>
+        <!-- Card 3 -->
+        <article class="card">
+          <div class="off">新着</div>
+          <div class="ph">FOTOS+</div>
+          <div class="body">
+            <div><strong>Habitación renovada 2025</strong></div>
+            <div class="price">Ver galería</div>
+            <div class="katsu">冷蔵庫静音・ソファベッド・照明LED</div>
+            <div class="stamp">NUEVO</div>
+          </div>
+        </article>
+        <!-- Card 4 -->
+        <article class="card">
+          <div class="off">限定</div>
+          <div class="ph">7 NOCHES</div>
+          <div class="body">
+            <div><strong>Súper semana ✦ 15% OFF</strong></div>
+            <div class="price">ARS 199.000</div>
+            <div class="katsu">Limpieza incluida・Cambio sábanas</div>
+          </div>
+        </article>
+        <!-- Card 5 -->
+        <article class="card">
+          <div class="off">早割</div>
+          <div class="ph">EARLY</div>
+          <div class="body">
+            <div><strong>Reserva con 30 días de anticipación</strong></div>
+            <div class="price">Hasta -10%</div>
+            <div class="katsu">キャンセル無料 (48h)</div>
+          </div>
+        </article>
+        <!-- Card 6 -->
+        <article class="card">
+          <div class="off">注目</div>
+          <div class="ph">MAPA</div>
+          <div class="body">
+            <div><strong>Ubicación ideal: 近く a todo</strong></div>
+            <div class="price">Ver puntos</div>
+            <div class="katsu">Plaza Colón・Clínicas・Centro</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Right side: coupons/avisos -->
+    <aside class="right">
+      <div class="coupon">
+        <h4>Cupones activos</h4>
+        <ul style="margin:0; padding-left:16px; font-size:12px;">
+          <li>WELCOME10 – 10% en la 1ª noche</li>
+          <li>WEEKDAY20 – 20% de lun a jue</li>
+          <li>LASTMIN – 12% últimas 48h</li>
+        </ul>
+      </div>
+      <div class="coupon">
+        <h4>Noticias / お知らせ</h4>
+        <p style="margin:0; font-size:12px;">Check‑in autónomo con cerradura digital. Manual del huésped actualizado. Nuevo sillón color <em>natural</em> 🛋️.</p>
+      </div>
+      <div class="coupon">
+        <h4>Contacto rápido</h4>
+        <p style="margin:0; font-size:12px;">WhatsApp +54 9 …<br />Email: reservas@monoambientecordoba.com.ar</p>
+      </div>
+    </aside>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="wrap">
+      <div class="links">
+        <a href="#">Términos</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Política de cancelación</a>
+        <a href="#">Mapa del sitio</a>
+        <a href="#">Afiliados</a>
+        <a href="#">Prensa</a>
+        <a href="#">Ayuda</a>
+        <a href="#">Acerca de</a>
+        <a href="#">Reclamos</a>
+        <a href="#">Soporte anfitriones</a>
+        <a href="#">Blog</a>
+        <a href="#">日本語ページ</a>
+      </div>
+      <div class="katsu">© 2025 Monoambiente Córdoba – Edición ULTRA (portal japonés)</div>
+    </div>
+  </footer>
+
+  <!-- ===== Dock CTAs persistentes ===== -->
+  <div class="dock" aria-label="Reservar">
+    <a class="btn btn--air" href="#airbnb">Reservar en Airbnb</a>
+    <a class="btn btn--book" href="#booking">Reservar en Booking</a>
+  </div>
+
+  <!-- ===== Pequeño JS opcional para stickers (tono divertido) ===== -->
+  <script>
+    // Da un leve "tilt" al mover el mouse sobre el hero
+    const hero = document.querySelector('.hero-box');
+    if(hero){
+      hero.addEventListener('mousemove', (e)=>{
+        const r = hero.getBoundingClientRect();
+        const cx = (e.clientX - r.left) / r.width - .5;
+        const cy = (e.clientY - r.top) / r.height - .5;
+        hero.style.transform = `perspective(800px) rotateX(${cy*-4}deg) rotateY(${cx*4}deg)`;
+      });
+      hero.addEventListener('mouseleave', ()=>{
+        hero.style.transform = 'none';
+      });
+    }
+  </script>
+</body>
+</html>
