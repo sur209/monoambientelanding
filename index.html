@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Monoambiente Córdoba — Alquiler Temporario</title>
+  <meta name="description" content="Depto amoblado en Córdoba Capital. Luminoso, moderno, Wi‑Fi rápido, a pasos del Centro. Reservá por Airbnb o Booking.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0f19;            /* Azul noche */
+      --card:#101526;          /* Tarjetas */
+      --text:#E6EBF5;          /* Texto principal */
+      --muted:#9aa4b2;         /* Texto secundario */
+      --ring:#1f2b46;          /* Bordes suaves */
+      --red:#ff4d6d;           /* Airbnb */
+      --blue:#00b4ff;          /* Booking */
+      --green:#2bd686;         /* WhatsApp */
+      --yellow:#ffe16a;        /* Avisos */
+      --chip:#1a2238;          /* Chips */
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; 
+      background:radial-gradient(1200px 600px at 70% -50%, #16203a 0%, transparent 60%), var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{color:inherit; text-decoration:none}
+
+    /* Header */
+    .header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(8px); background:rgba(11,15,25,.72); border-bottom:1px solid var(--ring)}
+    .nav{max-width:1100px; margin:auto; padding:14px 18px; display:flex; align-items:center; gap:16px}
+    .brand{display:flex; align-items:center; gap:12px; font-weight:700}
+    .brand .mark{width:34px; height:34px; border-radius:12px; background:linear-gradient(135deg,#5ab3ff,#9b7bff); box-shadow:inset 0 0 0 2px rgba(255,255,255,.12)}
+    .spacer{flex:1}
+    .menu{display:flex; gap:10px; flex-wrap:wrap}
+    .menu a{padding:10px 14px; border:1px solid var(--ring); border-radius:999px; color:var(--text); background:#0f1527; transition:.2s ease; font-weight:500}
+    .menu a:hover{transform:translateY(-1px); border-color:#2d3a63}
+    .menu .primary{background:linear-gradient(180deg,#1a9cff,#0077ff); border-color:transparent; color:white; box-shadow:0 8px 20px rgba(0,123,255,.3)}
+
+    /* Hero */
+    .hero{max-width:1100px; margin:28px auto 0; padding:24px 18px; display:grid; grid-template-columns:1.3fr 1fr; gap:28px}
+    .kicker{display:inline-flex; align-items:center; gap:10px; padding:8px 12px; border-radius:999px; background:#0f162a; border:1px solid var(--ring); color:var(--muted); font-weight:600; font-size:.9rem}
+    .badge{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:14px; border:1px dashed #b59c2a; background:linear-gradient(180deg,var(--yellow),#f8d54e); color:#2b2b2b; font-weight:700}
+    .hero h1{font-size:clamp(28px,4vw,44px); line-height:1.1; margin:16px 0 10px}
+    .stars{font-size:22px; letter-spacing:2px}
+    .lead{color:var(--muted); max-width:58ch}
+
+    .chips{display:flex; flex-wrap:wrap; gap:10px; margin:18px 0}
+    .chip{padding:9px 12px; background:var(--chip); border:1px solid var(--ring); border-radius:999px; color:#c9d4e5; font-weight:600; font-size:.92rem}
+
+    .ctas{display:flex; flex-wrap:wrap; gap:12px; margin:18px 0 8px}
+    .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:12px 16px; border-radius:14px; font-weight:700; border:0; cursor:pointer; transition:transform .15s ease, filter .15s ease}
+    .btn:active{transform:translateY(1px)}
+    .btn.airbnb{background:linear-gradient(180deg,#ff6b86,var(--red)); color:white; box-shadow:0 10px 24px rgba(255,77,109,.35)}
+    .btn.booking{background:linear-gradient(180deg,#40cfff,var(--blue)); color:#04121d; box-shadow:0 10px 24px rgba(0,180,255,.30)}
+    .btn.whats{background:linear-gradient(180deg,#6df0b2,var(--green)); color:#072515; box-shadow:0 10px 24px rgba(43,214,134,.28)}
+
+    .gallery{background:var(--card); border:1px solid var(--ring); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow)}
+    .gallery .img{aspect-ratio:16/10; background:#0d1324 url('file:///C:/Users/alemm/Downloads/Presentacion/IMG_20251024_170236_805_modificada.jpg') center/cover no-repeat}
+    .gallery .thumbs{display:grid; grid-template-columns:repeat(4,1fr)}
+    .gallery .thumbs div{aspect-ratio:4/3; border-top:1px solid var(--ring); border-left:1px solid var(--ring); background:#0d1324}
+    .gallery .thumbs div:nth-child(1){background:url('file:///C:/Users/alemm/Downloads/Presentacion/IMG_20251024_172849_754.jpg') center/cover}
+    .gallery .thumbs div:nth-child(2){background:url('file:///C:/Users/alemm/Downloads/Presentacion/IMG_20251024_172220_007.jpg') center/cover}
+    .gallery .thumbs div:nth-child(3){background:url('file:///C:/Users/alemm/Downloads/Presentacion/IMG_20251024_165951_705_modificada.jpg') center/cover}
+    .gallery .thumbs div:nth-child(4){background:url('file:///C:/Users/alemm/Downloads/Presentacion/IMG_20251024_174042_645.jpg') center/cover}
+
+    /* Secciones */
+    section{max-width:1100px; margin:24px auto; padding:0 18px}
+    .section-card{background:var(--card); border:1px solid var(--ring); border-radius:var(--radius); box-shadow:var(--shadow); padding:22px}
+    .section-card h2{margin:0 0 14px; font-size:clamp(20px,3vw,28px)}
+    .section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+    .notice{font-size:.9rem;color:#9fb0bf}
+
+    .grid{display:grid;gap:18px}
+
+    .amenities{display:flex; flex-wrap:wrap; gap:10px}
+    .amenities .chip{background:#0f162a}
+
+    .promo-strip{margin:28px 0 0; border:1px dashed #b59c2a; background:linear-gradient(180deg,var(--yellow),#f5d045); color:#2b2b2b; font-weight:800; padding:14px 16px; border-radius:14px; text-align:center}
+
+    /* Map */
+    .map{overflow:hidden; border-radius:14px; border:1px solid var(--ring)}
+    .map iframe{width:100%; height:360px; display:block; filter:saturate(110%)}
+
+    /* Footer */
+    footer{border-top:1px solid var(--ring); margin-top:34px; padding:24px 18px; color:var(--muted); text-align:center}
+
+    /* Floating CTA */
+    .float-cta{position:fixed; right:16px; bottom:16px; display:flex; flex-direction:column; gap:10px; z-index:60}
+    .float-cta .btn{padding:14px 16px; border-radius:16px}
+
+    /* Responsive */
+    @media (max-width: 920px){
+      .hero{grid-template-columns:1fr; gap:18px}
+      .menu{display:none}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header" aria-label="Barra de navegación">
+    <nav class="nav">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div>
+          <div>Monoambiente Córdoba</div>
+          <small style="color:var(--muted); font-weight:600">Alquiler temporario</small>
+        </div>
+      </div>
+      <div class="spacer"></div>
+      <div class="menu" role="navigation" aria-label="Principal">
+        <a href="https://www.monoambientecordoba.com.ar/alquiler_temporario.html">Alquiler Temporario</a>
+        <a href="#fotos">Fotos</a>
+        <a href="#ubicacion">Ubicación</a>
+        <a href="#contacto">Contacto</a>
+        <a class="primary" href="#reservar">Reservar Ahora</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="alquiler">
+    <div>
+      <div class="kicker">Ubicación top en Córdoba • Check‑in desde 13:00 • Consulta por check‑in temprano</div>
+      <div style="display:flex; gap:12px; align-items:center; margin-top:12px">
+        <span class="badge">MEGA OFERTA — 20% OFF entre semana</span>
+        <span class="badge" style="border-style:solid; border-color:#f25b6b; background:linear-gradient(180deg,#ffd1d9,#ffb3bf);">Últimos cupos</span>
+      </div>
+      <h1>Depto amoblado en Córdoba Capital <span class="stars" aria-label="5 estrellas" title="5 estrellas">★★★★★</span></h1>
+      <p class="lead">Departamento luminoso y moderno, ideal para viajes de trabajo o escapadas. A pasos del Centro, con Wi‑Fi rápido, cama doble, ventilador potente y cocina equipada.</p>
+
+      <div class="chips" aria-label="Características principales">
+        <span class="chip">2 huéspedes</span>
+        <span class="chip">1 cama doble</span>
+        <span class="chip">Baño completo</span>
+        <span class="chip">Cocina equipada</span>
+        <span class="chip">Smart TV</span>
+        <span class="chip">Wi‑Fi 300 Mbps</span>
+      </div>
+
+      <div class="ctas" id="reservar">
+        <a class="btn airbnb" href="https://www.airbnb.com.ar/rooms/1539417027195293426/" target="_blank" rel="noopener">Reservar en Airbnb</a>
+        <a class="btn booking" href="https://www.booking.com/hotel/ar/monoambiente-practico-y-bien-ubicado-alberdi.html" target="_blank" rel="noopener">Reservar en Booking</a>
+        <a class="btn whats" href="#contacto">WhatsApp</a>
+      </div>
+    </div>
+
+    <aside class="gallery" id="fotos" aria-label="Galería del departamento">
+      <div class="img" role="img" aria-label="Imagenes principales del monoambiente"></div>
+      <div class="thumbs">
+        <div aria-hidden="true"></div>
+        <div aria-hidden="true"></div>
+        <div aria-hidden="true"></div>
+        <div aria-hidden="true"></div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Comodidades -->
+  <section>
+    <div class="section-card">
+      <h2>Comodidades</h2>
+      <div class="amenities">
+        <span class="chip">Sábanas y toallas</span>
+        <span class="chip">Aire / Ventilación potente</span>
+        <span class="chip">Heladera y microondas</span>
+        <span class="chip">Vajilla y utensilios</span>
+        <span class="chip">Ducha con agua caliente</span>
+        <span class="chip">Espacio de trabajo</span>
+      </div>
+      <div class="promo-strip">¡Promoción por tiempo limitado! Reservá hoy y obtené 20% de descuento en noches de semana.</div>
+    </div>
+  </section>
+
+      <!-- RESEÑAS (placeholder) -->
+    <section id="reseñas">
+      <div class="section-title">
+        <h2 style="margin:0">Reseñas</h2>
+        <span class="notice">Huéspedes destacan la limpieza, ubicación y comunicación</span>
+      </div>
+      <div class="grid" style="grid-template-columns:1fr 1fr 1fr">
+        <div class="card">
+          <div class="stars">★★★★★</div>
+          <p>“Todo impecable. El check‑in fue súper rápido y el depto tiene todo lo necesario.”</p>
+          <small>— Huesped verificado</small>
+        </div>
+        <div class="card">
+          <div class="stars">★★★★★</div>
+          <p>“Cerca de todo. Internet rápido para trabajar y cama muy cómoda.”</p>
+          <small>— Huesped verificado</small>
+        </div>
+        <div class="card">
+          <div class="stars">★★★★★</div>
+          <p>“La comunicación fue excelente. Volvería sin dudar.”</p>
+          <small>— Huesped verificado</small>
+        </div>
+      </div>
+    </section>
+
+  <!-- Ubicación -->
+  <section id="ubicacion">
+    <div class="section-card">
+      <h2>Ubicación</h2>
+      <p class="lead" style="margin-top:-4px">Excelente ubicación en Córdoba Capital: cerca del centro, hospitales, transporte y zonas gastronómicas.</p>
+      <div class="map" role="img" aria-label="Mapa de ubicación">
+        <!-- Reemplazá el src con tu mapa real -->
+        <iframe loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6838.141!2d-64.188!3d-31.420!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzHCsDI1JzEyLjAiUyA2NMKwMTEnMTYuMCJX!5e0!3m2!1ses-419!2sar!4v1712600000000"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto">
+    <div class="section-card">
+      <h2>Contacto</h2>
+      <p>¿Dudas o fechas especiales? Escribime por WhatsApp y te confirmo disponibilidad al instante.</p>
+      <div class="ctas">
+        <a class="btn whats" href="#" target="_blank" rel="noopener">Chatear por WhatsApp</a>
+        <a class="btn booking" href="#" target="_blank" rel="noopener">Ver en Booking</a>
+        <a class="btn airbnb" href="#" target="_blank" rel="noopener">Ver en Airbnb</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Monoambiente Córdoba — alquiler temporario • © <span id="y"></span>
+  </footer>
+
+  <!-- Floating CTA (estilo sitio japonés, pero sobrio) -->
+  <div class="float-cta" aria-label="Reserva rápida">
+    <a class="btn airbnb" href="https://www.airbnb.com.ar/rooms/1539417027195293426/" target="_blank" rel="noopener">Reservar en Airbnb</a>
+    <a class="btn booking" href="https://www.booking.com/hotel/ar/monoambiente-practico-y-bien-ubicado-alberdi.html" target="_blank" rel="noopener">Reservar en Booking</a>
+  </div>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
