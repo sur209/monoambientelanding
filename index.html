@@ -73,13 +73,8 @@
     .btn.whats{background:linear-gradient(180deg,#6df0b2,var(--green)); color:#072515; box-shadow:0 10px 24px rgba(43,214,134,.28)}
 
     .gallery{background:var(--card); border:1px solid var(--ring); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow)}
-    .gallery .img{aspect-ratio:16/10; background:#0d1324 url('assets/image1.jpg') center/cover no-repeat}
     .gallery .thumbs{display:grid; grid-template-columns:repeat(4,1fr)}
     .gallery .thumbs div{aspect-ratio:4/3; border-top:1px solid var(--ring); border-left:1px solid var(--ring); background:#0d1324}
-    .gallery .thumbs div:nth-child(1){background:url('assets/image2.jpg') center/cover}
-    .gallery .thumbs div:nth-child(2){background:url('assets/image3.jpg') center/cover}
-    .gallery .thumbs div:nth-child(3){background:url('assets/image4.jpg') center/cover}
-    .gallery .thumbs div:nth-child(4){background:url('assets/image5.jpg') center/cover}
 
     /* Secciones */
     section{max-width:1100px; margin:24px auto; padding:0 18px}
@@ -167,12 +162,14 @@
     </div>
 
     <aside class="gallery" id="fotos" aria-label="Galería del departamento">
-      <div class="img" role="img" aria-label="Imagenes principales del monoambiente"></div>
+      <div class="img">
+        <img src="assets/image1.jpg" alt="Monoambiente moderno y luminoso en Córdoba Capital" width="1200" height="750" loading="lazy">
+      </div>
       <div class="thumbs">
-        <div aria-hidden="true"></div>
-        <div aria-hidden="true"></div>
-        <div aria-hidden="true"></div>
-        <div aria-hidden="true"></div>
+        <div><img src="assets/image2.jpg" alt="Cocina equipada con microondas y heladera" loading="lazy" width="400" height="300"></div>
+        <div><img src="assets/image3.jpg" alt="Cama doble con sábanas blancas" loading="lazy" width="400" height="300"></div>
+        <div><img src="assets/image4.jpg" alt="Baño completo con ducha y agua caliente" loading="lazy" width="400" height="300"></div>
+        <div><img src="assets/image5.jpg" alt="Vista general del monoambiente" loading="lazy" width="400" height="300"></div>
       </div>
     </aside>
   </section>
