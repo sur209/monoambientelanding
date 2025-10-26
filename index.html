@@ -109,7 +109,7 @@
     
     .gallery .thumbs img.fade-in-thumb {
       opacity: 0;
-      animation: fadeInThumb 3.2s ease forwards;
+      animation: fadeInThumb 0.8s ease forwards;
     }
     
     @keyframes fadeIn {
@@ -201,7 +201,7 @@
           oldMain.classList.add('fade-in-thumb');
           thumb.replaceWith(oldMain);
         }
-      }, 200);
+      }, 100);
     }
   
     thumbsContainer.addEventListener('click', e => {
