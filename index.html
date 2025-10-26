@@ -71,7 +71,7 @@
     .btn.airbnb{background:linear-gradient(180deg,#ff6b86,var(--red)); color:white; box-shadow:0 10px 24px rgba(255,77,109,.35)}
     .btn.booking{background:linear-gradient(180deg,#40cfff,var(--blue)); color:#04121d; box-shadow:0 10px 24px rgba(0,180,255,.30)}
     .btn.whats{background:linear-gradient(180deg,#6df0b2,var(--green)); color:#072515; box-shadow:0 10px 24px rgba(43,214,134,.28)}
-
+    
     .gallery {
       max-width: 600px;
       margin: auto;
@@ -96,7 +96,6 @@
       transform: scale(0.97);
     }
     
-    /* Miniaturas */
     .gallery .thumbs {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -112,6 +111,7 @@
       border-radius: 4px;
       transition: transform 0.2s ease, filter 0.2s ease;
     }
+    
     .gallery .thumbs img:hover {
       transform: scale(1.05);
       filter: brightness(1.1);
@@ -148,51 +148,55 @@
     }
   </style>
 
+  /* ===== SCRIPT ===== */
   <script>
-  const gallery = document.querySelector('.gallery');
-  const mainContainer = gallery.querySelector('.img');
-  const thumbsContainer = gallery.querySelector('.thumbs');
+  document.addEventListener('DOMContentLoaded', () => {
+    const gallery = document.querySelector('.gallery');
+    const mainContainer = gallery.querySelector('.img');
+    const thumbsContainer = gallery.querySelector('.thumbs');
   
-  function swapWithMain(thumb) {
-    const currentMain = mainContainer.querySelector('img');
-    const newMain = thumb.cloneNode(true);
-    const oldMain = currentMain.cloneNode(true);
+    function swapWithMain(thumb) {
+      const currentMain = mainContainer.querySelector('img');
+      if (!currentMain || !thumb) return;
   
-    // animación fade
-    currentMain.classList.add('fade-out');
+      const newMain = thumb.cloneNode(true);
+      const oldMain = currentMain.cloneNode(true);
   
-    setTimeout(() => {
-      mainContainer.innerHTML = '';         // limpia
-      mainContainer.appendChild(newMain);   // inserta la nueva
-      thumb.replaceWith(oldMain);           // baja la anterior
-    }, 300);
-  }
+      currentMain.classList.add('fade-out');
   
-  // clic manual
-  thumbsContainer.addEventListener('click', e => {
-    const thumb = e.target.closest('img');
-    if (!thumb) return;
-    swapWithMain(thumb);
-    restartAuto();
-  });
+      setTimeout(() => {
+        mainContainer.innerHTML = '';
+        mainContainer.appendChild(newMain);
+        thumb.replaceWith(oldMain);
+      }, 300);
+    }
   
-  // slider automático
-  let timer;
-  function autoSlide() {
-    const thumbs = thumbsContainer.querySelectorAll('img');
-    if (thumbs.length === 0) return;
-    swapWithMain(thumbs[0]); // mueve la primera miniatura arriba
-  }
-  function startAuto() {
-    timer = setInterval(autoSlide, 5000);
-  }
-  function restartAuto() {
-    clearInterval(timer);
+    thumbsContainer.addEventListener('click', e => {
+      const thumb = e.target.closest('img');
+      if (!thumb) return;
+      swapWithMain(thumb);
+      restartAuto();
+    });
+  
+    let timer;
+    function autoSlide() {
+      const thumbs = thumbsContainer.querySelectorAll('img');
+      if (thumbs.length === 0) return;
+      swapWithMain(thumbs[0]);
+    }
+  
+    function startAuto() {
+      clearInterval(timer);
+      timer = setInterval(autoSlide, 5000);
+    }
+  
+    function restartAuto() {
+      clearInterval(timer);
+      startAuto();
+    }
+  
     startAuto();
-  }
-  
-  // iniciar
-  startAuto();
+  });
   </script>
 </head>
 <body>
