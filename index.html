@@ -107,8 +107,18 @@
       z-index: 2;
     }
     
+    .gallery .thumbs img.fade-in-thumb {
+      opacity: 0;
+      animation: fadeInThumb 1s ease forwards;
+    }
+    
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(1.03); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    
+    @keyframes fadeInThumb {
+      from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
     }
     
@@ -184,14 +194,14 @@
       // Insertar la nueva imagen por encima
       mainContainer.appendChild(newMain);
   
-      // Esperar la animación, luego limpiar y actualizar miniatura
+      // Esperar la animación, luego limpiar y actualizar miniatura con fade-in
       setTimeout(() => {
         currentMain.remove();
-        // Reemplazar solo si la miniatura sigue en el contenedor
         if (thumb.isConnected) {
+          oldMain.classList.add('fade-in-thumb');
           thumb.replaceWith(oldMain);
         }
-      }, 1000);
+      }, 1100);
     }
   
     thumbsContainer.addEventListener('click', e => {
@@ -221,6 +231,7 @@
     startAuto();
   });
   </script>
+
   
 </head>
 <body>
