@@ -88,23 +88,12 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.4s ease, opacity 0.4s ease;
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
     
-    /* efecto al salir */
     .gallery .img img.fade-out {
       opacity: 0;
-      transform: translateY(15px) scale(0.98);
-    }
-    
-    /* efecto al entrar */
-    .gallery .img img:not(.fade-out) {
-      animation: zoomIn 0.4s ease;
-    }
-    
-    @keyframes zoomIn {
-      from { transform: scale(1.05); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      transform: scale(0.97);
     }
     
     /* Miniaturas */
@@ -121,9 +110,8 @@
       object-fit: cover;
       cursor: pointer;
       border-radius: 4px;
-      transition: transform 0.3s ease, filter 0.3s ease;
+      transition: transform 0.2s ease, filter 0.2s ease;
     }
-    
     .gallery .thumbs img:hover {
       transform: scale(1.05);
       filter: brightness(1.1);
@@ -159,64 +147,52 @@
       .header{position:static}
     }
   </style>
+
   <script>
-  const mainContainer = document.querySelector('.gallery .img');
-  const thumbsContainer = document.querySelector('.gallery .thumbs');
-  let mainImg = mainContainer.querySelector('img');
-  let interval;
+  const gallery = document.querySelector('.gallery');
+  const mainContainer = gallery.querySelector('.img');
+  const thumbsContainer = gallery.querySelector('.thumbs');
   
-  // Función para intercambiar imágenes (tanto para clic como para automático)
-  function swapImages(targetIndex = null) {
-    const thumbs = thumbsContainer.querySelectorAll('img');
-    let clicked;
+  function swapWithMain(thumb) {
+    const currentMain = mainContainer.querySelector('img');
+    const newMain = thumb.cloneNode(true);
+    const oldMain = currentMain.cloneNode(true);
   
-    if (targetIndex !== null) {
-      clicked = thumbs[targetIndex];
-    } else {
-      // si no se pasa índice, elegimos la primera miniatura (rotación)
-      clicked = thumbs[0];
-    }
-  
-    const oldMain = mainImg.cloneNode(true);
-    const newMain = clicked.cloneNode(true);
-  
-    mainImg.classList.add('fade-out');
+    // animación fade
+    currentMain.classList.add('fade-out');
   
     setTimeout(() => {
-      mainContainer.replaceChildren(newMain);
-      clicked.replaceWith(oldMain);
-      mainImg = newMain;
+      mainContainer.innerHTML = '';         // limpia
+      mainContainer.appendChild(newMain);   // inserta la nueva
+      thumb.replaceWith(oldMain);           // baja la anterior
     }, 300);
   }
   
-  // Manejo de clic manual
+  // clic manual
   thumbsContainer.addEventListener('click', e => {
-    const clicked = e.target.closest('img');
-    if (!clicked) return;
-  
-    const thumbs = Array.from(thumbsContainer.querySelectorAll('img'));
-    const index = thumbs.indexOf(clicked);
-  
-    swapImages(index);
-    restartAutoSlide();
+    const thumb = e.target.closest('img');
+    if (!thumb) return;
+    swapWithMain(thumb);
+    restartAuto();
   });
   
-  // Rotación automática
+  // slider automático
+  let timer;
   function autoSlide() {
-    swapImages(); // rota el primero hacia arriba
+    const thumbs = thumbsContainer.querySelectorAll('img');
+    if (thumbs.length === 0) return;
+    swapWithMain(thumbs[0]); // mueve la primera miniatura arriba
+  }
+  function startAuto() {
+    timer = setInterval(autoSlide, 5000);
+  }
+  function restartAuto() {
+    clearInterval(timer);
+    startAuto();
   }
   
-  function startAutoSlide() {
-    interval = setInterval(autoSlide, 5000);
-  }
-  
-  function restartAutoSlide() {
-    clearInterval(interval);
-    startAutoSlide();
-  }
-  
-  // iniciar automáticamente
-  startAutoSlide();
+  // iniciar
+  startAuto();
   </script>
 </head>
 <body>
