@@ -88,7 +88,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: opacity 0.4s ease, transform 0.4s ease;
+      transition: opacity 1.6s ease, transform 1.6s ease;
     }
     
     .gallery .img img.fade-out {
@@ -168,7 +168,7 @@
         mainContainer.innerHTML = '';
         mainContainer.appendChild(newMain);
         thumb.replaceWith(oldMain);
-      }, 300);
+      }, 1400);
     }
   
     thumbsContainer.addEventListener('click', e => {
@@ -187,7 +187,7 @@
   
     function startAuto() {
       clearInterval(timer);
-      timer = setInterval(autoSlide, 10000);
+      timer = setInterval(autoSlide, 20000);
     }
   
     function restartAuto() {
