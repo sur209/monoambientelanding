@@ -88,17 +88,23 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 1;
       transition: opacity 1.6s ease, transform 1.6s ease;
     }
     
     .gallery .img img.fade-out {
       opacity: 0;
       transform: scale(0.97);
+      z-index: 1;
     }
-
+    
     .gallery .img img.fade-in {
       opacity: 0;
       animation: fadeIn 1.6s ease forwards;
+      z-index: 2;
     }
     
     @keyframes fadeIn {
@@ -169,16 +175,20 @@
       if (!currentMain || !thumb) return;
   
       const newMain = thumb.cloneNode(true);
-      const oldMain = currentMain.cloneNode(true);
+      const oldMain = currentMain;
   
-      currentMain.classList.add('fade-out');
+      // Preparar transiciones simultáneas
+      oldMain.classList.add('fade-out');
+      newMain.classList.add('fade-in');
+  
+      // Insertar la nueva imagen encima, sin borrar la anterior todavía
+      mainContainer.appendChild(newMain);
   
       setTimeout(() => {
-        newMain.classList.add('fade-in');
-        mainContainer.innerHTML = '';
-        mainContainer.appendChild(newMain);
-        thumb.replaceWith(oldMain);
-      }, 1600); // sincronizado con el nuevo fade-out
+        // Remover la vieja imagen tras completar la animación
+        oldMain.remove();
+        thumb.replaceWith(currentMain.cloneNode(true));
+      }, 1600);
     }
   
     thumbsContainer.addEventListener('click', e => {
@@ -197,7 +207,7 @@
   
     function startAuto() {
       clearInterval(timer);
-      timer = setInterval(autoSlide, 16000);
+      timer = setInterval(autoSlide, 12000);
     }
   
     function restartAuto() {
@@ -208,6 +218,7 @@
     startAuto();
   });
   </script>
+  
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
