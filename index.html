@@ -175,20 +175,23 @@
       if (!currentMain || !thumb) return;
   
       const newMain = thumb.cloneNode(true);
-      const oldMain = currentMain;
+      const oldMain = currentMain.cloneNode(true);
   
-      // Preparar transiciones simultáneas
-      oldMain.classList.add('fade-out');
+      // Marcar animaciones
+      currentMain.classList.add('fade-out');
       newMain.classList.add('fade-in');
   
-      // Insertar la nueva imagen encima, sin borrar la anterior todavía
+      // Insertar la nueva imagen por encima
       mainContainer.appendChild(newMain);
   
+      // Esperar la animación, luego limpiar y actualizar miniatura
       setTimeout(() => {
-        // Remover la vieja imagen tras completar la animación
-        oldMain.remove();
-        thumb.replaceWith(currentMain.cloneNode(true));
-      }, 800);
+        currentMain.remove();
+        // Reemplazar solo si la miniatura sigue en el contenedor
+        if (thumb.isConnected) {
+          thumb.replaceWith(oldMain);
+        }
+      }, 1000);
     }
   
     thumbsContainer.addEventListener('click', e => {
