@@ -216,7 +216,10 @@
     function autoSlide() {
       const thumbs = thumbsContainer.querySelectorAll('img');
       if (thumbs.length === 0) return;
-      swapWithMain(thumbs[0]);
+      // Elegir índice aleatorio
+      const randomIndex = Math.floor(Math.random() * thumbs.length);
+      const randomThumb = thumbs[randomIndex];      
+      swapWithMain(randomThumb);
     }
   
     function startAuto() {
