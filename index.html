@@ -173,8 +173,34 @@
       .hero{grid-template-columns:1fr; gap:18px}
       .header{position:static}
     }
+
+  .fade-text {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    transition: opacity 1.2s ease-in-out;
+  }
+  .fade-text.active {
+    opacity: 1;
+  }
   </style>
 
+  
+  <script>
+    // Script para agregar estilo dinamico al texto parrafo
+  document.addEventListener('DOMContentLoaded', () => {
+    const texts = document.querySelectorAll('.fade-text');
+    let index = 0;
+    setInterval(() => {
+      texts[index].classList.remove('active');
+      index = (index + 1) % texts.length;
+      texts[index].classList.add('active');
+    }, 4000);
+  });
+  </script>
+  
   <script>
   document.addEventListener('DOMContentLoaded', () => {
     const gallery = document.querySelector('.gallery');
@@ -306,18 +332,21 @@
   </section>
 
 
-  <section>
-    <small style="color:var(--muted); font-weight:600">Tu mejor opción de <strong>alquiler temporario</strong> en Córdoba Capital, cerca del centro y con todas las comodidades.</small>
-    <small style="color:var(--muted); font-weight:600">Disfrutá la tranquilidad de un <strong>alquiler temporario</strong> en Alberdi, a pasos de los principales puntos de la ciudad.</small>
-    <small style="color:var(--muted); font-weight:600">Elegí un <strong>alquiler temporario</strong> moderno, limpio y luminoso, perfecto para descansar o trabajar en Córdoba.</small>
-    <small style="color:var(--muted); font-weight:600">Descubrí la comodidad de un <strong>alquiler temporario</strong> bien ubicado, con Wi-Fi rápido y check-in flexible.</small>
-    <small style="color:var(--muted); font-weight:600">Viví Córdoba desde un <strong>alquiler temporario</strong> en Alberdi, un barrio con historia, vida y excelente conexión al centro.</small>
-    <small style="color:var(--muted); font-weight:600">Experimentá el confort de un <strong>alquiler temporario</strong> con estilo, pensado para tu descanso y comodidad.</small>
-    <small style="color:var(--muted); font-weight:600">Sentite local en un <strong>alquiler temporario</strong> en Córdoba, con ambiente moderno y atención personalizada.</small>
-    <small style="color:var(--muted); font-weight:600">Un <strong>alquiler temporario</strong> ideal para quienes buscan independencia y cercanía a todo lo que ofrece Córdoba Capital.</small>
-    <small style="color:var(--muted); font-weight:600">Relajate en un <strong>alquiler temporario</strong> donde cada detalle fue pensado para que disfrutes tu estadía.</small>
-    <small style="color:var(--muted); font-weight:600">Viví la experiencia de un <strong>alquiler temporario</strong> en Córdoba que combina diseño, ubicación y confort.</small>
-  </section>  
+<section class="hero-text" style="position:relative; height:40px; overflow:hidden;">
+  <p class="fade-text active" style="color:var(--muted); font-weight:600">
+    Tu mejor opción de <strong>alquiler temporario</strong> en Córdoba Capital, cerca del centro y con todas las comodidades.
+  </p>
+  <p class="fade-text" style="color:var(--muted); font-weight:600">
+    Disfrutá la tranquilidad de un <strong>alquiler temporario</strong> en Alberdi, a pasos de los principales puntos de la ciudad.
+  </p>
+  <p class="fade-text" style="color:var(--muted); font-weight:600">
+    Viví Córdoba desde un espacio moderno y luminoso, con Wi-Fi rápido y check-in flexible.
+  </p>
+  <p class="fade-text" style="color:var(--muted); font-weight:600">
+    Sentite como en casa en tu próximo <strong>alquiler temporario</strong> en Córdoba Capital.
+  </p>
+</section>
+
   
   <!-- Comodidades -->
   <section>
