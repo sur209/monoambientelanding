@@ -185,10 +185,63 @@
   .fade-text.active {
     opacity: 1;
   }
-  </style>
 
+  .hero-text {
+    position: relative;
+    height: 70px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 1rem;
+  }
   
-  <script>
+  .hero-text p {
+    color: var(--muted);
+    font-weight: 600;
+    line-height: 1.4;
+    opacity: 0;
+    position: absolute;
+    margin: 0;
+    width: 100%;
+    max-width: 850px;
+    transition: opacity 1.2s ease-in-out;
+  }
+  
+  .hero-text p.active {
+    opacity: 1;
+  }
+  
+  /* 🔹 Responsividad */
+  @media (max-width: 768px) {
+    .hero-text {
+      height: 90px;
+    }
+    .hero-text p {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (min-width: 769px) and (max-width: 1199px) {
+    .hero-text {
+      height: 75px;
+    }
+    .hero-text p {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .hero-text p {
+      font-size: 1.1rem;
+    }
+  }
+    
+</style>
+
+
+<script>
     // Script para agregar estilo dinamico al texto parrafo
   document.addEventListener('DOMContentLoaded', () => {
     const texts = document.querySelectorAll('.fade-text');
