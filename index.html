@@ -170,7 +170,7 @@
 
     .fade-text {
       opacity: 0;
-      position: relative;
+      position: absolute;
       left: 0;
       top: 0;
       width: 100%;
@@ -180,11 +180,18 @@
       opacity: 1;
     }
 
+    .hero-text{
+      position:relative;
+      height: fit-content;
+      overflow:hidden;
+      text-align:center;
+    }
+
     /* Responsive */
     @media (max-width: 920px){
       .hero{grid-template-columns:1fr; gap:18px}
       .header{position:static}
-      .hero-text{margin: 14px; height:100px}
+      .hero-text{margin: 14px;}
     }    
   </style>
 
@@ -332,7 +339,7 @@
   </section>
 
 
-<section class="hero-text" style="position:relative; height:40px overflow:hidden; text-align:center;">
+<section class="hero-text">
   <p class="fade-text active" style="color:var(--muted); font-weight:600">
     Tu mejor opción de <strong>alquiler temporario</strong> en Córdoba Capital, cerca del centro y con todas las comodidades.
   </p>
